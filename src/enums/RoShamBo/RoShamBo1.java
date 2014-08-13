@@ -28,66 +28,81 @@ interface Item {
 }
 
 class Paper implements Item {
-    public Outcome compete(Item it) {
+    @Override
+	public Outcome compete(Item it) {
         return it.eval(this);
     }
-    public Outcome eval(Paper p) {
+    @Override
+	public Outcome eval(Paper p) {
         return DRAW;
     }
 
-    public Outcome eval(Scissors s) {
+    @Override
+	public Outcome eval(Scissors s) {
         return WIN;
     }
 
-    public Outcome eval(Rock r) {
+    @Override
+	public Outcome eval(Rock r) {
         return LOSE;
     }
 
-    public String toString() {
+    @Override
+	public String toString() {
         return "Paper";
     }
 }
 
 class Scissors implements Item {
-    public Outcome compete(Item it) {
+    @Override
+	public Outcome compete(Item it) {
         return it.eval(this);
     }
 
-    public Outcome eval(Paper p) {
+    @Override
+	public Outcome eval(Paper p) {
         return LOSE;
     }
 
-    public Outcome eval(Scissors s) {
+    @Override
+	public Outcome eval(Scissors s) {
         return DRAW;
     }
 
-    public Outcome eval(Rock r) {
+    @Override
+	public Outcome eval(Rock r) {
         return WIN;
     }
 
-    public String toString() {
+    @Override
+	public String toString() {
         return "Scissors";
     }
 }
 
 class Rock implements Item {
-    public Outcome compete(Item it) {
+    @Override
+	public Outcome compete(Item it) {
         return it.eval(this);
     }
 
-    public Outcome eval(Paper p) {
+    @Override
+	public Outcome eval(Paper p) {
         return WIN;
     }
 
-    public Outcome eval(Scissors s) {
+    @Override
+	public Outcome eval(Scissors s) {
         return LOSE;
     }
 
-    public Outcome eval(Rock r) {
+    @Override
+	public Outcome eval(Rock r) {
         return DRAW;
     }
 
-    public String toString() {
+    @Override
+	public String toString() {
         return "Rock";
     }
 }

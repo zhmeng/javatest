@@ -15,18 +15,21 @@ package enums;
  */
 enum TLight{
     RED(30){
-        public TLight next(){
+        @Override
+		public TLight next(){
             return AMBER;
         }
         
     },
     AMBER(10){
-        public TLight next(){
+        @Override
+		public TLight next(){
             return GREEN;
         }
     },
     GREEN(10){
-        public TLight next(){
+        @Override
+		public TLight next(){
             return RED;
         }
     };

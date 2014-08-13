@@ -1,0 +1,92 @@
+/**
+ * Project Name:java
+ * File Name:TableCreator.java
+ * Package Name:annotations.example2
+ * Date:2014-8-12下午3:03:40
+ *
+ */
+
+package annotations.example2;
+/**
+ * ClassName:TableCreator
+ * Function: TODO ADD FUNCTION.
+ * Date:     2014-8-12 下午3:03:40 
+ * @author   张猛
+ */
+import java.lang.annotation.*;
+import java.lang.reflect.*;
+import java.util.*;
+
+
+public class TableCreator {
+	public static void main(String[] args) throws Exception {
+		/*if (args.length < 1) {
+			System.out.println("arguments: annotated classes");
+			System.exit(0);
+		}*/
+		args = new String[1];
+		args[0] = "annotations.example2.Member";
+		for (String className : args) {
+			Class<?> cl = Class.forName(className);
+			DBTable dbTable = cl.getAnnotation(DBTable.class);
+			if (dbTable == null) {
+				System.out.println("No DBTable annotations in class "
+						+ className);
+				continue;
+			}
+			String tableName = dbTable.name();
+			// If the name is empty, use the Class name:
+			if (tableName.length() < 1)
+				tableName = cl.getName().toUpperCase();
+			List<String> columnDefs = new ArrayList<String>();
+			for (Field field : cl.getDeclaredFields()) {
+				String columnName = null;
+				Annotation[] anns = field.getDeclaredAnnotations();
+				if (anns.length < 1)
+					continue; // Not a db table column
+				if (anns[0] instanceof SQLInteger) {
+					SQLInteger sInt = (SQLInteger) anns[0];
+					// Use field name if name not specified
+					if (sInt.name().length() < 1)
+						columnName = field.getName().toUpperCase();
+					else
+						columnName = sInt.name();
+					columnDefs.add(columnName + " INT"
+							+ getConstraints(sInt.constraints()));
+				}
+				if (anns[0] instanceof SQLString) {
+					SQLString sString = (SQLString) anns[0];
+					// Use field name if name not specified.
+					if (sString.name().length() < 1)
+						columnName = field.getName().toUpperCase();
+					else
+						columnName = sString.name();
+					columnDefs.add(columnName + " VARCHAR(" + sString.value()
+							+ ")" + getConstraints(sString.constraints()));
+				}
+				StringBuilder createCommand = new StringBuilder("CREATE TABLE "
+						+ tableName + "(");
+				for (String columnDef : columnDefs)
+					createCommand.append("\n    " + columnDef + ",");
+				// Remove trailing comma
+				String tableCreate = createCommand.substring(0,
+						createCommand.length() - 1)
+						+ ");";
+				System.out.println("Table Creation SQL for " + className
+						+ " is :\n" + tableCreate);
+				System.out.printf("%n");
+			}
+			
+		}
+	}
+	private static String getConstraints(Constraints con) {
+		String constraints = "";
+		if (!con.allowNull())
+			constraints += " NOT NULL";
+		if (con.primaryKey())
+			constraints += " PRIMARY KEY";
+		if (con.unique())
+			constraints += " UNIQUE";
+		return constraints;
+	}
+}

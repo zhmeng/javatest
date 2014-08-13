@@ -29,7 +29,8 @@ class Card {  // A card
    
    Rank getRank() { return rank; }
    Suit getSuit() { return suit; }
-   public String toString() { return "This card is " + rank + " of " + suit; }
+   @Override
+public String toString() { return "This card is " + rank + " of " + suit; }
 }
    
 class CardDeck {  // A deck of card

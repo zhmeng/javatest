@@ -33,6 +33,7 @@ enum RoShamBo5 implements Competitor<RoShamBo5> {
 		row.put(RoShamBo5.SCISSORS, vSCISSORS);
 		row.put(RoShamBo5.ROCK, vROCK);
 	}
+	@Override
 	public Outcome compete(RoShamBo5 it) {
 		return table.get(this).get(it);
 	}

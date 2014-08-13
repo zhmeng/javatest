@@ -15,25 +15,32 @@ package enums;
  */
 enum Day{
      MONDAY(1) {
-        public Day next() { return TUESDAY; }   // each instance provides its implementation to abstract method
+        @Override
+		public Day next() { return TUESDAY; }   // each instance provides its implementation to abstract method
      },
      TUESDAY(2) {
-        public Day next() { return WEDNESDAY; }
+        @Override
+		public Day next() { return WEDNESDAY; }
      },
      WEDNESDAY(3) {
-        public Day next() { return THURSDAY; }
+        @Override
+		public Day next() { return THURSDAY; }
      },
      THURSDAY(4) {
-        public Day next() { return FRIDAY; }
+        @Override
+		public Day next() { return FRIDAY; }
      },
      FRIDAY(5) {
-        public Day next() { return SATURDAY; }
+        @Override
+		public Day next() { return SATURDAY; }
      },
      SATURDAY(6) {
-        public Day next() { return SUNDAY; }
+        @Override
+		public Day next() { return SUNDAY; }
      },
      SUNDAY(7) {
-        public Day next() { return MONDAY; }
+        @Override
+		public Day next() { return MONDAY; }
      };
    
      public abstract Day next(); // 构造函数 enum 如同父类和一群子类的集合。
